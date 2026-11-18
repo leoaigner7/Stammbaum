@@ -53,7 +53,7 @@ function draw(id, gen, index, role){
     el("text", { x: x+12, y: y+20, class: "name" }, g).textContent = p.name;
     const life = [p.geburt && "* " + p.geburt, p.tod && "† " + p.tod].filter(Boolean).join("  ");
     el("text", { x: x+12, y: y+37, class: "meta" }, g).textContent = life || "Daten unbekannt";
-    el("text", { x: x+12, y: y+53, class: "meta" }, g).textContent = p.geburtsort || p.notiz || "";
+    el("text", { x: x+12, y: y+53, class: "meta" }, g).textContent = p.geburtsort || (p.wohnort && "lebte in " + p.wohnort) || p.notiz || "";
     const tip = el("title", {}, g); tip.textContent = Object.entries(p).filter(([k,v]) => v && !["id","vater","mutter"].includes(k)).map(([k,v]) => k + ": " + v).join("\n");
   } else {
     el("text", { x: x+12, y: y+37, class: "meta" }, g).textContent = role + " – unbekannt";
