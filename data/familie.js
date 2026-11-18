@@ -28,7 +28,7 @@ window.FAMILIE = {
     { id: "ines",   name: "Ines Aigner",   geschlecht: "w", vater: "josef_jun", mutter: "ulrike", notiz: "Cousine von Leo", quelle: "ta_josef" },
 
     // Generation 3 – Großeltern und deren Geschwister
-    { id: "josef_bentele", name: "Josef Bentele", geschlecht: "m", tod: "verstorben", notiz: "Vater von Mama Birgit (bestätigt)", quelle: "pb_pilsting; eigene Angabe" },
+    { id: "josef_bentele", name: "Josef Bentele", geschlecht: "m", tod: "ca. 2004/05", notiz: "Vater von Mama Birgit (bestätigt)", quelle: "pb_pilsting; eigene Angabe" },
     { id: "josef",  name: "Josef Aigner",  geschlecht: "m", geburt: "22.12.1935", tod: "13.10.2019", todesort: "Oberndorf (Markt Pilsting)", wohnort: "Oberndorf, Pilsting", partner: "ida", notiz: "Beerdigt 18.10.2019, Pfarrkirche Pilsting", quelle: "eigene Angabe; ta_josef" },
     { id: "ida",    name: "Ida Aigner geb. Angermaier",    geschlecht: "w", geburt: "Anfang/Mitte Mai (Jahr ?)", tod: "Ende August, evtl. 2007", wohnort: "Pilsting", partner: "josef", geburtsort: "vermutl. Pilsting", notiz: "Daten abgeleitet aus Gedenkmessen (Geburtstag ~9./10. Mai, Sterbetag ~22.–25. Aug.); Geburtsname Angermaier abgeleitet aus Traueranzeige ihrer Schwester Sophie", quelle: "eigene Angabe; ta_sophie; pb_pilsting; ta_josef (dort nicht mehr genannt)" },
 
@@ -42,7 +42,7 @@ window.FAMILIE = {
 ,
 
     // Zuordnung noch offen
-    { id: "rosa_zellner", name: "Rosa Zellner", geschlecht: "w", partner: "josef_zellner", offen: "Tante von Papa Helmut (bestätigt) – Schwester von Ida oder von Josef?", notiz: "Geburtstag ~Mitte Oktober, Sterbetag ~Ende August", quelle: "pb_pilsting" },
+    { id: "rosa_zellner", name: "Rosa Zellner", geschlecht: "w", wohnort: "Pfarrkirchen", partner: "josef_zellner", offen: "Tante von Papa Helmut (bestätigt) – Schwester von Ida oder von Josef?", notiz: "Geburtstag ~Mitte Oktober, Sterbetag ~Ende August", quelle: "pb_pilsting" },
     { id: "josef_zellner", name: "Josef Zellner", geschlecht: "m", partner: "rosa_zellner", offen: "Onkel von Papa Helmut (vermutl. Ehemann von Rosa)", notiz: "Sterbetag ~um den 19.–22. März, Geburtstag ~Mitte Juli", quelle: "pb_pilsting" },
   ]
 };
