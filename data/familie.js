@@ -10,7 +10,7 @@ window.FAMILIE = {
     { id: "helmut", name: "Helmut Aigner", geschlecht: "m", geburt: "15.12.1968", geburtsort: "", vater: "josef", mutter: "ida", quelle: "eigene Angabe" },
     { id: "birgit", name: "Birgit Aigner geb. Bentele", geschlecht: "w", geburt: "30.04.1968", geburtsort: "", notiz: "geb. Bentele", vater: "", mutter: "", quelle: "eigene Angabe" },
     { id: "josef",  name: "Josef Aigner",  geschlecht: "m", geburt: "22.12.1935", geburtsort: "", tod: "13.10.2019", todesort: "Oberndorf (Markt Pilsting)", wohnort: "Pilsting", vater: "", mutter: "", quelle: "eigene Angabe" },
-    { id: "ida",    name: "Ida Aigner",    geschlecht: "w", geburt: "", geburtsort: "", tod: "verstorben", wohnort: "Pilsting", notiz: "Schwester: Sophie Geier", vater: "", mutter: "", quelle: "eigene Angabe" },
+    { id: "ida",    name: "Ida Aigner",    geschlecht: "w", geburt: "", geburtsort: "", tod: "2007 (?)", wohnort: "Pilsting", notiz: "Schwester: Sophie Geier; Messintention z. Geburtstag durch Fam. Helmut Aigner im Pfarrbrief Pilsting-Wallersdorf", vater: "", mutter: "", quelle: "eigene Angabe" },
     { id: "sophie", name: "Sophie Geier",  geschlecht: "w", geburt: "", geburtsort: "", notiz: "Schwester von Oma Ida (lebt); unklar ob Geier Geburts- oder Ehename", vater: "", mutter: "", quelle: "eigene Angabe" }
   ]
 };
