@@ -22,9 +22,9 @@ window.FAMILIE = {
     { id: "josef_jun", name: "Josef Aigner (jun.)", geschlecht: "m", vater: "josef", mutter: "ida", partner: "ulrike", notiz: "Onkel, Bruder von Helmut", quelle: "ta_josef" },
     { id: "ulrike", name: "Ulrike Aigner", geschlecht: "w", partner: "josef_jun", notiz: "Ehefrau von Onkel Josef; Geburtsname unbekannt", quelle: "ta_josef" },
 
-    // Cousin/Cousine – laut Traueranzeige Enkel von Josef; vermutlich Kinder von Josef jun. & Ulrike
-    { id: "tobias", name: "Tobias Aigner", geschlecht: "m", vater: "josef_jun", mutter: "ulrike", notiz: "Enkel von Josef sen.; Eltern vermutet (Josef jun. & Ulrike) – bitte bestätigen", quelle: "ta_josef" },
-    { id: "ines",   name: "Ines Aigner",   geschlecht: "w", vater: "josef_jun", mutter: "ulrike", notiz: "Enkelin von Josef sen.; Eltern vermutet (Josef jun. & Ulrike), Nachname evtl. anders – bitte bestätigen", quelle: "ta_josef" },
+    // Cousin/Cousine – Kinder von Josef jun. & Ulrike (bestätigt)
+    { id: "tobias", name: "Tobias Aigner", geschlecht: "m", vater: "josef_jun", mutter: "ulrike", notiz: "Cousin von Leo", quelle: "ta_josef" },
+    { id: "ines",   name: "Ines Aigner",   geschlecht: "w", vater: "josef_jun", mutter: "ulrike", notiz: "Cousine von Leo", quelle: "ta_josef" },
 
     // Generation 3 – Großeltern und deren Geschwister
     { id: "josef",  name: "Josef Aigner",  geschlecht: "m", geburt: "22.12.1935", tod: "13.10.2019", todesort: "Oberndorf (Markt Pilsting)", wohnort: "Oberndorf, Pilsting", partner: "ida", notiz: "Beerdigt 18.10.2019, Pfarrkirche Pilsting", quelle: "eigene Angabe; ta_josef" },
@@ -35,7 +35,7 @@ window.FAMILIE = {
     { id: "hans_aigner", name: "Hans Aigner", geschlecht: "m", geschwister_von: "josef", partner: "irene_aigner", notiz: "Bruder von Opa Josef", quelle: "ta_josef" },
     { id: "irene_aigner", name: "Irene Aigner", geschlecht: "w", partner: "hans_aigner", notiz: "Ehefrau von Hans", quelle: "ta_josef" },
 
-    { id: "sofie",  name: "Sofie Geier",   geschlecht: "w", geschwister_von: "ida", partner: "helmut_geier", notiz: "Schwester von Oma Ida (lebt); Geier = Ehename", quelle: "eigene Angabe; ta_josef (\"Schwägerin mit Helmut\")" },
+    { id: "sofie",  name: "Sofie Geier",   geschlecht: "w", geschwister_von: "ida", partner: "helmut_geier", tod: "nach Okt. 2019", notiz: "Schwester von Oma Ida; verstorben; Geier = Ehename", quelle: "eigene Angabe; ta_josef (\"Schwägerin mit Helmut\")" },
     { id: "helmut_geier", name: "Helmut Geier", geschlecht: "m", partner: "sofie", notiz: "Ehemann von Sofie", quelle: "ta_josef" }
   ]
 };
