@@ -50,6 +50,7 @@ const slots = 2 ** (maxGen - 1);
 const svg = document.getElementById("tree"), NS = "http://www.w3.org/2000/svg";
 const totalH = slots * (H + GAP_Y) + 30, totalW = maxGen * (W + GAP_X);
 svg.setAttribute("width", totalW); svg.setAttribute("height", totalH);
+const cut = (t, n=33) => t && t.length > n ? t.slice(0, n-1) + "…" : t;
 function el(tag, attrs, parent=svg){ const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
 for (let g = 0; g < maxGen; g++) el("text", { x: g*(W+GAP_X) + W/2, y: 16, "text-anchor":"middle", class:"gen" }).textContent = GEN_NAMES[g] || (g+"."+" Gen.");
 function draw(id, gen, index, role){
@@ -59,10 +60,10 @@ function draw(id, gen, index, role){
   el("rect", { x, y, width: W, height: H, rx: 6 }, g);
   if (p) {
     el("rect", { x, y, width: 5, height: H, rx: 2, class: "bar" }, g);
-    el("text", { x: x+12, y: y+20, class: "name" }, g).textContent = p.name;
+    el("text", { x: x+12, y: y+20, class: "name" }, g).textContent = cut(p.name, 30);
     const life = [p.geburt && "* " + p.geburt, p.tod && "† " + p.tod].filter(Boolean).join("  ");
-    el("text", { x: x+12, y: y+37, class: "meta" }, g).textContent = life || "Daten unbekannt";
-    el("text", { x: x+12, y: y+53, class: "meta" }, g).textContent = p.geburtsort || (p.wohnort && "lebte in " + p.wohnort) || p.notiz || "";
+    el("text", { x: x+12, y: y+37, class: "meta" }, g).textContent = cut(life) || "Daten unbekannt";
+    el("text", { x: x+12, y: y+53, class: "meta" }, g).textContent = cut(p.geburtsort || (p.wohnort && "lebte in " + p.wohnort) || p.notiz || "");
     const tip = el("title", {}, g); tip.textContent = Object.entries(p).filter(([k,v]) => v && !["id","vater","mutter"].includes(k)).map(([k,v]) => k + ": " + v).join("\n");
   } else {
     el("text", { x: x+12, y: y+37, class: "meta" }, g).textContent = role + " – unbekannt";
@@ -81,10 +82,12 @@ const nm = p => p.name + (p.geburt || p.tod ? " (" + [p.geburt && "* " + p.gebur
 const partnerOf = p => p.partner && byId[p.partner];
 const kids = p => F.personen.filter(c => c.vater === p.id || c.mutter === p.id);
 function siblings(a){
-  return F.personen.filter(s => s.id !== a.id && (
-    s.geschwister_von === a.id || a.geschwister_von === s.id ||
-    (s.geschwister_von && s.geschwister_von === a.geschwister_von) ||
-    (a.vater && s.vater === a.vater) || (a.mutter && s.mutter === a.mutter)));
+  // Geschwistergruppe: transitiv über geschwister_von und gemeinsame Eltern
+  const linked = (x, y) => x.geschwister_von === y.id || y.geschwister_von === x.id ||
+    (x.vater && x.vater === y.vater) || (x.mutter && x.mutter === y.mutter);
+  const grp = new Set([a.id]); let grew = true;
+  while (grew) { grew = false; for (const s of F.personen) if (!grp.has(s.id) && [...grp].some(id => linked(s, byId[id]))) { grp.add(s.id); grew = true; } }
+  grp.delete(a.id); return [...grp].map(id => byId[id]);
 }
 function li(p, withKids){
   const pa = partnerOf(p);
@@ -100,6 +103,8 @@ for (const a of line) {
   if (!sibs.length) continue;
   html += '<div class="grp"><h3>Geschwister von ' + a.name + '</h3><ul>' + sibs.map(s => li(s, true)).join("") + '</ul></div>';
 }
+const offen = F.personen.filter(p => p.offen);
+if (offen.length) html += '<div class="grp"><h3>Zuordnung noch offen</h3><ul>' + offen.map(p => li(Object.assign({}, p, { notiz: p.offen + (p.notiz ? " · " + p.notiz : "") }), false)).join("") + '</ul></div>';
 document.getElementById("rel").innerHTML = html;
 if (F.quellen) document.getElementById("src").innerHTML = "<strong>Quellen:</strong><br>" + Object.values(F.quellen).join("<br>");
 </script>
