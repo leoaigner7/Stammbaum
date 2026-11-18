@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stammbaum Aigner</title>
+<style>
+  :root { --bg:#f7f4ee; --card:#fff; --ink:#2b2622; --muted:#7a7068; --line:#b9ab9a; --m:#3c6e91; --w:#a2475e; --unk:#d9d2c8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1d1b19; --card:#2a2724; --ink:#eee7de; --muted:#a59a8f; --line:#5e554c; --unk:#3a3632; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 Georgia, "Times New Roman", serif; }
+  header { padding:24px 16px 8px; text-align:center; }
+  h1 { margin:0; font-size:28px; letter-spacing:.5px; }
+  header p { margin:4px 0 0; color:var(--muted); font-size:14px; }
+  #wrap { overflow:auto; padding:16px; }
+  svg { display:block; margin:0 auto; }
+  .card rect { fill:var(--card); stroke:var(--line); }
+  .card.m rect.bar { fill:var(--m); stroke:none; }
+  .card.w rect.bar { fill:var(--w); stroke:none; }
+  .card.unk rect { fill:var(--unk); stroke-dasharray:4 3; }
+  .name { font-weight:bold; font-size:13px; fill:var(--ink); }
+  .meta { font-size:11px; fill:var(--muted); }
+  .link { fill:none; stroke:var(--line); stroke-width:1.5; }
+  .gen { font-size:12px; fill:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+  #sib { text-align:center; color:var(--muted); font-size:14px; padding:0 16px 24px; }
+</style>
+</head>
+<body>
+<header><h1>Stammbaum der Familie Aigner</h1><p>Ahnentafel – gestrichelte Felder sind noch unbekannt</p></header>
+<div id="wrap"><svg id="tree"></svg></div>
+<div id="sib"></div>
+<script src="data/familie.js"></script>
+<script>
+const F = window.FAMILIE, byId = Object.fromEntries(F.personen.map(p => [p.id, p]));
+const W = 190, H = 64, GAP_X = 70, GAP_Y = 12;
+const GEN_NAMES = ["Ich", "Eltern", "Großeltern", "Urgroßeltern", "Ururgroßeltern", "5. Generation", "6. Generation", "7. Generation"];
+// Tiefe bestimmen (mind. eine unbekannte Generation über den bekannten anzeigen)
+function depth(id){ const p = byId[id]; if(!p) return 0; return 1 + Math.max(depth(p.vater), depth(p.mutter)); }
+const maxGen = Math.min(depth(F.start) + 1, 8);
+const slots = 2 ** (maxGen - 1);
+const svg = document.getElementById("tree"), NS = "http://www.w3.org/2000/svg";
+const totalH = slots * (H + GAP_Y) + 30, totalW = maxGen * (W + GAP_X);
+svg.setAttribute("width", totalW); svg.setAttribute("height", totalH);
+function el(tag, attrs, parent=svg){ const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+for (let g = 0; g < maxGen; g++) el("text", { x: g*(W+GAP_X) + W/2, y: 16, "text-anchor":"middle", class:"gen" }).textContent = GEN_NAMES[g] || (g+"."+" Gen.");
+function draw(id, gen, index, role){
+  const n = 2 ** gen, band = totalH - 30, cy = 30 + band * (index + 0.5) / n;
+  const x = gen * (W + GAP_X), y = cy - H/2, p = byId[id];
+  const g = el("g", { class: "card " + (p ? (p.geschlecht || "") : "unk") });
+  el("rect", { x, y, width: W, height: H, rx: 6 }, g);
+  if (p) {
+    el("rect", { x, y, width: 5, height: H, rx: 2, class: "bar" }, g);
+    el("text", { x: x+12, y: y+20, class: "name" }, g).textContent = p.name;
+    const life = [p.geburt && "* " + p.geburt, p.tod && "† " + p.tod].filter(Boolean).join("  ");
+    el("text", { x: x+12, y: y+37, class: "meta" }, g).textContent = life || "Daten unbekannt";
+    el("text", { x: x+12, y: y+53, class: "meta" }, g).textContent = p.geburtsort || p.notiz || "";
+    const tip = el("title", {}, g); tip.textContent = Object.entries(p).filter(([k,v]) => v && !["id","vater","mutter"].includes(k)).map(([k,v]) => k + ": " + v).join("\n");
+  } else {
+    el("text", { x: x+12, y: y+37, class: "meta" }, g).textContent = role + " – unbekannt";
+  }
+  if (gen + 1 < maxGen) {
+    [[p && p.vater, 0, "Vater"], [p && p.mutter, 1, "Mutter"]].forEach(([pid, k, r]) => {
+      const ci = index*2 + k, cn = 2 ** (gen+1), ccy = 30 + band * (ci + 0.5) / cn, x2 = (gen+1)*(W+GAP_X), mx = x + W + GAP_X/2;
+      el("path", { d: `M${x+W},${cy} H${mx} V${ccy} H${x2}`, class: "link" });
+      draw(pid, gen + 1, ci, r);
+    });
+  }
+}
+draw(F.start, 0, 0, "");
+const me = byId[F.start];
+const sibs = F.personen.filter(p => p.id !== me.id && p.vater && p.vater === me.vater && p.mutter === me.mutter);
+if (sibs.length) document.getElementById("sib").textContent = "Geschwister: " + sibs.map(s => s.name + (s.geburt ? " (* " + s.geburt + ")" : "")).join(", ");
+</script>
+</body>
+</html>
