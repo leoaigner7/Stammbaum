@@ -22,13 +22,22 @@
   .meta { font-size:11px; fill:var(--muted); }
   .link { fill:none; stroke:var(--line); stroke-width:1.5; }
   .gen { font-size:12px; fill:var(--muted); text-transform:uppercase; letter-spacing:1px; }
-  #sib { text-align:center; color:var(--muted); font-size:14px; padding:0 16px 24px; }
+  #rel { max-width:1000px; margin:0 auto; padding:8px 16px 40px; display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+  #rel h2 { grid-column:1/-1; font-size:20px; margin:16px 0 0; }
+  .grp { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px; }
+  .grp h3 { margin:0 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); }
+  .grp ul { margin:0; padding-left:18px; }
+  .grp li { margin:4px 0; }
+  .grp .sub { color:var(--muted); font-size:13px; }
+  .grp ul ul { padding-left:16px; font-size:14px; }
+  #src { max-width:1000px; margin:0 auto; padding:0 16px 32px; color:var(--muted); font-size:13px; }
 </style>
 </head>
 <body>
 <header><h1>Stammbaum der Familie Aigner</h1><p>Ahnentafel – gestrichelte Felder sind noch unbekannt</p></header>
 <div id="wrap"><svg id="tree"></svg></div>
-<div id="sib"></div>
+<div id="rel"></div>
+<div id="src"></div>
 <script src="data/familie.js"></script>
 <script>
 const F = window.FAMILIE, byId = Object.fromEntries(F.personen.map(p => [p.id, p]));
@@ -67,9 +76,32 @@ function draw(id, gen, index, role){
   }
 }
 draw(F.start, 0, 0, "");
-const me = byId[F.start];
-const sibs = F.personen.filter(p => p.id !== me.id && p.vater && p.vater === me.vater && p.mutter === me.mutter);
-if (sibs.length) document.getElementById("sib").textContent = "Geschwister: " + sibs.map(s => s.name + (s.geburt ? " (* " + s.geburt + ")" : "")).join(", ");
+// Weitere Verwandte: Geschwister jeder Person der Ahnenlinie, mit Partnern und Kindern
+const nm = p => p.name + (p.geburt || p.tod ? " (" + [p.geburt && "* " + p.geburt, p.tod && "† " + p.tod].filter(Boolean).join(", ") + ")" : "");
+const partnerOf = p => p.partner && byId[p.partner];
+const kids = p => F.personen.filter(c => c.vater === p.id || c.mutter === p.id);
+function siblings(a){
+  return F.personen.filter(s => s.id !== a.id && (
+    s.geschwister_von === a.id || a.geschwister_von === s.id ||
+    (s.geschwister_von && s.geschwister_von === a.geschwister_von) ||
+    (a.vater && s.vater === a.vater) || (a.mutter && s.mutter === a.mutter)));
+}
+function li(p, withKids){
+  const pa = partnerOf(p);
+  let h = "<li>" + nm(p) + (pa ? ' <span class="sub">⚭ ' + nm(pa) + "</span>" : "") + (p.notiz ? '<br><span class="sub">' + p.notiz + "</span>" : "");
+  const k = withKids ? kids(p) : [];
+  if (k.length) h += '<ul>' + k.map(c => '<li>' + nm(c) + (c.notiz ? '<br><span class="sub">' + c.notiz + '</span>' : '') + '</li>').join("") + '</ul>';
+  return h + "</li>";
+}
+const line = []; (function walk(id){ const p = byId[id]; if (!p) return; line.push(p); walk(p.vater); walk(p.mutter); })(F.start);
+let html = "<h2>Geschwister & weitere Verwandte</h2>";
+for (const a of line) {
+  const sibs = siblings(a);
+  if (!sibs.length) continue;
+  html += '<div class="grp"><h3>Geschwister von ' + a.name + '</h3><ul>' + sibs.map(s => li(s, true)).join("") + '</ul></div>';
+}
+document.getElementById("rel").innerHTML = html;
+if (F.quellen) document.getElementById("src").innerHTML = "<strong>Quellen:</strong><br>" + Object.values(F.quellen).join("<br>");
 </script>
 </body>
 </html>
