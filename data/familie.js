@@ -9,6 +9,7 @@ window.FAMILIE = {
   start: "leo",
   quellen: {
     ta_josef: "Traueranzeige Josef Aigner, idowa / Landauer Zeitung, Okt. 2019 (quellen/traueranzeige_josef_aigner_2019.png)",
+    ta_sophie: "Traueranzeige Sophie Geier geb. Angermaier, idowa, Jan. 2024 (quellen/traueranzeige_sophie_geier_2024.png)",
     pb_pilsting: "Pfarrbrief Pilsting-Wallersdorf (Messintention Fam. Helmut Aigner für † Mutter u. Oma Ida Aigner)"
   },
   personen: [
@@ -28,14 +29,14 @@ window.FAMILIE = {
 
     // Generation 3 – Großeltern und deren Geschwister
     { id: "josef",  name: "Josef Aigner",  geschlecht: "m", geburt: "22.12.1935", tod: "13.10.2019", todesort: "Oberndorf (Markt Pilsting)", wohnort: "Oberndorf, Pilsting", partner: "ida", notiz: "Beerdigt 18.10.2019, Pfarrkirche Pilsting", quelle: "eigene Angabe; ta_josef" },
-    { id: "ida",    name: "Ida Aigner",    geschlecht: "w", tod: "vor 2019, evtl. 2007", wohnort: "Pilsting", partner: "josef", notiz: "Geburtsname unbekannt (nicht Geier – das ist der Ehename ihrer Schwester)", quelle: "eigene Angabe; pb_pilsting; ta_josef (dort nicht mehr genannt)" },
+    { id: "ida",    name: "Ida Aigner geb. Angermaier",    geschlecht: "w", tod: "vor 2019, evtl. 2007", wohnort: "Pilsting", partner: "josef", geburtsort: "vermutl. Pilsting", notiz: "Geburtsname Angermaier abgeleitet aus Traueranzeige ihrer Schwester Sophie", quelle: "eigene Angabe; ta_sophie; pb_pilsting; ta_josef (dort nicht mehr genannt)" },
 
     { id: "anna_wimmer", name: "Anna Wimmer geb. Aigner", geschlecht: "w", geschwister_von: "josef", partner: "konrad_wimmer", notiz: "Schwester von Opa Josef", quelle: "ta_josef" },
     { id: "konrad_wimmer", name: "Konrad Wimmer", geschlecht: "m", partner: "anna_wimmer", notiz: "Ehemann von Anna", quelle: "ta_josef" },
     { id: "hans_aigner", name: "Hans Aigner", geschlecht: "m", geschwister_von: "josef", partner: "irene_aigner", notiz: "Bruder von Opa Josef", quelle: "ta_josef" },
     { id: "irene_aigner", name: "Irene Aigner", geschlecht: "w", partner: "hans_aigner", notiz: "Ehefrau von Hans", quelle: "ta_josef" },
 
-    { id: "sofie",  name: "Sofie Geier",   geschlecht: "w", geschwister_von: "ida", partner: "helmut_geier", tod: "nach 2022", notiz: "Schwester von Oma Ida; verstorben; Geier = Ehename", quelle: "eigene Angabe; ta_josef (\"Schwägerin mit Helmut\")" },
+    { id: "sofie",  name: "Sophie Geier geb. Angermaier", geschlecht: "w", geburt: "01.12.1932", tod: "20.01.2024", wohnort: "Pilsting", geschwister_von: "ida", partner: "helmut_geier", notiz: "Schwester von Oma Ida; Urnenbestattung Pilsting 26.01.2024", quelle: "ta_sophie; ta_josef (\"Sofie Geier, Schwägerin mit Helmut\")" },
     { id: "helmut_geier", name: "Helmut Geier", geschlecht: "m", partner: "sofie", notiz: "Ehemann von Sofie", quelle: "ta_josef" }
   ]
 };
