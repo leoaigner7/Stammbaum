@@ -35,7 +35,7 @@ window.FAMILIE = {
     { id: "hans_aigner", name: "Hans Aigner", geschlecht: "m", geschwister_von: "josef", partner: "irene_aigner", notiz: "Bruder von Opa Josef", quelle: "ta_josef" },
     { id: "irene_aigner", name: "Irene Aigner", geschlecht: "w", partner: "hans_aigner", notiz: "Ehefrau von Hans", quelle: "ta_josef" },
 
-    { id: "sofie",  name: "Sofie Geier",   geschlecht: "w", geschwister_von: "ida", partner: "helmut_geier", tod: "nach Okt. 2019", notiz: "Schwester von Oma Ida; verstorben; Geier = Ehename", quelle: "eigene Angabe; ta_josef (\"Schwägerin mit Helmut\")" },
+    { id: "sofie",  name: "Sofie Geier",   geschlecht: "w", geschwister_von: "ida", partner: "helmut_geier", tod: "nach 2022", notiz: "Schwester von Oma Ida; verstorben; Geier = Ehename", quelle: "eigene Angabe; ta_josef (\"Schwägerin mit Helmut\")" },
     { id: "helmut_geier", name: "Helmut Geier", geschlecht: "m", partner: "sofie", notiz: "Ehemann von Sofie", quelle: "ta_josef" }
   ]
 };
